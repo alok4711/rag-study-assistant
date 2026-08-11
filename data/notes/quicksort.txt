@@ -1,0 +1,16 @@
+Quicksort
+
+Quicksort is a divide-and-conquer sorting algorithm. It picks a "pivot"
+element from the array and partitions the other elements into two
+sub-arrays: those less than the pivot and those greater than the pivot.
+The sub-arrays are then sorted recursively.
+
+Time complexity: average case O(n log n), worst case O(n^2) when the
+pivot choice is poor (e.g. already sorted array with first-element pivot).
+
+Space complexity: O(log n) due to the recursion stack, since quicksort
+sorts in place.
+
+Quicksort is generally faster in practice than merge sort due to better
+cache performance and lower constant factors, despite having a worse
+worst-case time complexity.

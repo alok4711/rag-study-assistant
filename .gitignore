@@ -1,0 +1,20 @@
+# Secrets - never commit these
+.env
+backend/.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Vector DB storage (regenerated from notes, don't commit)
+backend/chroma_store/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# OS
+.DS_Store
