@@ -54,7 +54,21 @@ def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> list[str]
     Think about: should you split by character count, word count, or by
     sentences/paragraphs? Each has trade-offs -- we'll discuss when you're here.
     """
-    raise NotImplementedError("Write me second.")
+
+    chunks = []
+
+    start = 0
+
+    while start < len(text):
+        end = start + chunk_size
+        piece = text[start:end]
+
+        if piece.strip():
+            chunks.append(piece)
+
+        start = start + (chunk_size - overlap)
+
+    return chunks
 
 
 def embed_and_store(chunks: list[dict], db_path: str):
