@@ -83,10 +83,53 @@ def embed_and_store(chunks: list[dict], db_path: str):
     4. For each chunk: encode it to a vector, then add it to the collection
        along with its text and source filename as metadata
     """
-    raise NotImplementedError("Write me third.")
+    # 1. Load the embedding model
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    # 2. Create/connect to persistent ChromaDB
+    client = chromadb.PersistentClient(path=db_path)
+
+    # 3. Create or get the collection
+    collection = client.get_or_create_collection("notes")
+
+    # 4. Extract text from all chunks
+    texts = [chunk["text"] for chunk in chunks]
+
+    # Encode all texts at once
+    vectors = model.encode(texts).tolist()
+
+    # 5. Build IDs
+    ids = [f"chunk_{i}" for i in range(len(chunks))]
+
+    # Documents = original text
+    documents = [chunk["text"] for chunk in chunks]
+
+    # Metadata = source filename
+    metadatas = [
+        {"source": chunk["source"]}
+        for chunk in chunks
+    ]
+
+    # 6. Store everything in ChromaDB
+    collection.add(
+        ids=ids,
+        embeddings=vectors,
+        documents=documents,
+        metadatas=metadatas
+    )
 
 
 if __name__ == "__main__":
     # This will become: load -> chunk -> embed_and_store
     # once the functions above are implemented.
-    print("Ingestion pipeline not implemented yet. See TODOs above.")
+
+    docs = load_documents("../data/notes")
+    
+    all_chunks = []
+    for doc in docs:
+        pieces = chunk_text(doc["text"])
+        for piece in pieces:
+            all_chunks.append({"text": piece, "source": doc["source"]})
+    
+    embed_and_store(all_chunks, "./chroma_store")
+    print(f"Stored {len(all_chunks)} chunks in the vector database.")
