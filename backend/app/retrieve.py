@@ -6,6 +6,8 @@ you already embedded and stored (see ingest.py).
 We'll build this after ingest.py is working.
 """
 
+from sentence_transformers import SentenceTransformer
+import chromadb
 
 def retrieve_relevant_chunks(question: str, db_path: str, top_k: int = 3) -> list[dict]:
     """
@@ -18,4 +20,34 @@ def retrieve_relevant_chunks(question: str, db_path: str, top_k: int = 3) -> lis
     use the exact same one here -- otherwise the vectors won't be
     comparable (they'd be measuring "distance" in different spaces).
     """
-    raise NotImplementedError("We'll build this after ingest.py works end to end.")
+
+    # Load the embedding model
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    question_vector = model.encode([question]).tolist()  # note: wrapped in a list
+
+    # Create/connect to persistent ChromaDB
+    client = chromadb.PersistentClient(path=db_path)
+
+    # Create or get the collection
+    collection = client.get_collection("notes")
+
+    # Find the most relevant chunks
+    results = collection.query(
+        query_embeddings=question_vector,
+        n_results=top_k
+    )
+
+    # Convert ChromaDB results into our desired format
+    chunks = []
+
+    documents = results["documents"][0]
+    metadatas = results["metadatas"][0]
+
+    for text, metadata in zip(documents, metadatas):
+        chunks.append({
+            "text": text,
+            "source": metadata["source"]
+        })
+
+    return chunks

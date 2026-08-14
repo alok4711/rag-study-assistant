@@ -4,7 +4,7 @@ A retrieval-augmented AI assistant that answers questions using your own
 study notes, with a self-built evaluation layer that measures how good
 its answers actually are.
 
-Built by Alok Kumar as a placement portfolio project.
+Built by Alok Kumar.
 
 ## Project status
 
