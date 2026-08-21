@@ -24,7 +24,7 @@ cd backend
 python -m venv venv
 source venv/bin/activate      # on Windows: venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env          # then edit .env and add your Anthropic API key
+cp .env.example .env          # then edit .env and add your Gemini API key
 ```
 
 ## Project structure
@@ -36,7 +36,7 @@ rag-study-assistant/
 │   │   ├── config.py      # loads settings from .env
 │   │   ├── ingest.py      # loads notes -> chunks -> embeddings -> vector DB
 │   │   ├── retrieve.py    # question -> relevant chunks
-│   │   ├── generate.py    # question + chunks -> answer (via Claude API)
+│   │   ├── generate.py    # question + chunks -> answer (via Gemini API)
 │   │   └── main.py        # FastAPI server tying it together
 │   └── requirements.txt
 ├── data/
@@ -45,16 +45,10 @@ rag-study-assistant/
 └── frontend/              # React UI, built in Week 2
 ```
 
-## How to get an Anthropic API key
-
-1. Go to https://console.anthropic.com/
-2. Sign up / log in, go to "API Keys"
-3. Create a new key, paste it into `backend/.env` as ANTHROPIC_API_KEY
-
 ## Why these tools
 
 - **sentence-transformers**: generates embeddings locally, free, no API
   key needed for this part (only generation uses the paid API)
 - **ChromaDB**: lightweight local vector database, no separate server needed
 - **FastAPI**: simple Python web framework for the backend API
-- **Anthropic API**: generates the actual answers using retrieved context
+- **Gemini API**: generates the actual answers using retrieved context

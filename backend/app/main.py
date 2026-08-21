@@ -10,6 +10,10 @@ generate.py. We'll fill this in once those two are working.
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from app.retrieve import retrieve_relevant_chunks
+from app.generate import generate_answer
+from app.config import CHROMA_DB_PATH
+
 app = FastAPI(title="RAG Study Assistant")
 
 
@@ -24,10 +28,6 @@ def health():
 
 @app.post("/ask")
 def ask(req: QuestionRequest):
-    """
-    TODO once retrieve.py and generate.py are done:
-    1. chunks = retrieve_relevant_chunks(req.question, ...)
-    2. answer = generate_answer(req.question, chunks)
-    3. return {"answer": answer, "sources": [c["source"] for c in chunks]}
-    """
-    return {"answer": "Not implemented yet", "sources": []}
+    chunks = retrieve_relevant_chunks(req.question, CHROMA_DB_PATH)
+    answer = generate_answer(req.question, chunks)
+    return {"answer": answer, "sources": [c["source"] for c in chunks]}
