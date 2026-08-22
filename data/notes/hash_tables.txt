@@ -1,0 +1,16 @@
+Hash Tables
+
+A hash table stores key-value pairs and uses a hash function to compute an
+index into an array of buckets, from which the desired value can be found.
+
+Average time complexity for insert, delete, and search is O(1), because
+the hash function maps a key almost directly to its storage location.
+
+Worst case time complexity is O(n), which happens when many keys hash to
+the same bucket (a collision), forcing a linear scan within that bucket.
+
+Collision handling strategies include chaining (each bucket holds a linked
+list of entries) and open addressing (probing for the next free slot).
+
+A good hash function distributes keys uniformly across buckets to minimize
+collisions and keep operations close to O(1) in practice.

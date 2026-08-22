@@ -1,0 +1,18 @@
+Merge Sort
+
+Merge sort is a divide-and-conquer sorting algorithm. It divides the array
+into two halves, recursively sorts each half, then merges the two sorted
+halves back together.
+
+Unlike quicksort, merge sort's performance does not depend on the input's
+initial order.
+
+Time complexity: O(n log n) in all cases (best, average, and worst) --
+this consistency is merge sort's main advantage over quicksort.
+
+Space complexity: O(n) because merging requires a temporary array to hold
+elements during the merge step. This is merge sort's main disadvantage --
+it is not an in-place sort, unlike quicksort.
+
+Merge sort is a stable sort, meaning equal elements retain their relative
+order after sorting. Quicksort is not stable by default.
