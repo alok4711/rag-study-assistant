@@ -89,6 +89,12 @@ def embed_and_store(chunks: list[dict], db_path: str):
     # 2. Create/connect to persistent ChromaDB
     client = chromadb.PersistentClient(path=db_path)
 
+    # Start fresh each time ingestion runs, so old/stale data never lingers
+    try:
+        client.delete_collection("notes")
+    except Exception:
+        pass  # collection didn't exist yet, nothing to delete
+
     # 3. Create or get the collection
     collection = client.get_or_create_collection("notes")
 
