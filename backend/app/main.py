@@ -19,6 +19,8 @@ from app.ingest import run_ingestion
 
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.evaluate import run_evaluation
+
 
 app = FastAPI(title="RAG Study Assistant")
 
@@ -69,3 +71,25 @@ async def upload(file: UploadFile = File(...)):
 
     count = run_ingestion(NOTES_DIR, CHROMA_DB_PATH)
     return {"message": f"Uploaded and indexed {filename}", "chunks_indexed": count}
+
+
+
+@app.post("/evaluate")
+async def evaluate(file: UploadFile = File(...)):
+    if not file.filename or not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only .csv files are allowed")
+
+    contents = await file.read()
+    csv_text = contents.decode("utf-8")
+
+    results = run_evaluation(csv_text, CHROMA_DB_PATH)
+
+    # Compute a simple summary too -- useful for the dashboard
+    scores = [r["score"] for r in results]
+    average_score = sum(scores) / len(scores) if scores else 0
+
+    return {
+        "results": results,
+        "average_score": round(average_score, 2),
+        "total_questions": len(results)
+    }
