@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './AskPage.css'
 
-const API_URL = 'http://127.0.0.1:8000/ask'
+const API_URL = import.meta.env.VITE_API_URL
 
 function AskPage() {
   const [question, setQuestion]=useState("");
@@ -21,7 +21,7 @@ function AskPage() {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      const response = await fetch("http://127.0.0.1:8000/upload", {
+      const response = await fetch(`${API_URL}/upload`, {
         method: "POST",
         body: formData
       });
@@ -44,7 +44,7 @@ function AskPage() {
     setLoading(true);
     setAnswer(null);
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(`${API_URL}/ask`, {
         method: 'POST',
         headers:{
           "Content-Type": "application/json"

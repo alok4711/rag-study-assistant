@@ -1,0 +1,164 @@
+.evaluate-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1a1a1a;
+}
+
+.evaluate-page h1 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 32px;
+}
+
+/* Upload section */
+.upload-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  background: #f7f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.upload-box input[type="file"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  background: white;
+}
+
+.upload-box button {
+  padding: 11px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.upload-box button:hover {
+  background: #1d4ed8;
+}
+
+.upload-box button:disabled {
+  background: #9ab4f0;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.loading {
+  color: #666;
+  font-style: italic;
+}
+
+.error {
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+/* Results */
+.evaluation-results {
+  margin-top: 32px;
+}
+
+.evaluation-results h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.evaluation-results > p {
+  padding: 14px 16px;
+  background: #f7f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Table */
+.evaluation-results table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.evaluation-results th {
+  text-align: left;
+  padding: 12px 14px;
+  background: #f7f8fa;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.evaluation-results td {
+  padding: 14px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.evaluation-results tr:last-child td {
+  border-bottom: none;
+}
+
+/* Score column */
+.evaluation-results th:nth-child(2),
+.evaluation-results td:nth-child(2) {
+  width: 80px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Question column */
+.evaluation-results th:first-child,
+.evaluation-results td:first-child {
+  width: 35%;
+}
+
+/* Reasoning column */
+.evaluation-results th:nth-child(3),
+.evaluation-results td:nth-child(3) {
+  width: 45%;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .evaluate-page {
+    padding: 32px 16px;
+  }
+
+  .upload-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .upload-box button {
+    width: 100%;
+  }
+
+  .evaluation-results {
+    overflow-x: auto;
+  }
+
+  .evaluation-results table {
+    min-width: 650px;
+  }
+}
