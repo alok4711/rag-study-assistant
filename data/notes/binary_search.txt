@@ -1,17 +1,32 @@
 Binary Search
 
-Binary search is a searching algorithm used on sorted arrays. It repeatedly
-divides the search interval in half, comparing the target value to the
-middle element.
+Binary Search is an efficient searching algorithm used to find an element in a sorted array.
 
-If the target equals the middle element, the search is done. If the target
-is smaller, the search continues in the left half. If larger, it continues
-in the right half.
+The basic idea of Binary Search is to repeatedly divide the search range into half.
 
-Time complexity: O(log n) since the search space halves each step.
+Algorithm:
+1. Set left to the first index of the array.
+2. Set right to the last index of the array.
+3. Calculate the middle index.
+4. Compare the middle element with the target.
+5. If the middle element is equal to the target, return its index.
+6. If the target is smaller than the middle element, search the left half.
+7. If the target is greater than the middle element, search the right half.
+8. Repeat until the element is found or the search range becomes empty.
 
-Space complexity: O(1) for the iterative version, O(log n) for the
-recursive version due to the call stack.
+Time Complexity:
+The best-case time complexity is O(1).
+The average-case time complexity is O(log n).
+The worst-case time complexity is O(log n).
 
-Binary search requires the array to be sorted beforehand. Searching an
-unsorted array requires linear search instead, which is O(n).
+Space Complexity:
+The iterative implementation of Binary Search uses O(1) extra space.
+
+Important:
+Binary Search works correctly only when the data is sorted.
+
+Example:
+Array = [10, 20, 30, 40, 50, 60, 70]
+Target = 50
+
+The algorithm checks the middle element and eliminates half of the search space at each step until 50 is found.

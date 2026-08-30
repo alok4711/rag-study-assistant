@@ -13,6 +13,7 @@ in our next session, starting with load_documents().
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
 import chromadb
+from app.config import NOTES_DIR, CHROMA_DB_PATH
 
 
 def load_documents(notes_dir: str) -> list[dict]:
@@ -125,11 +126,12 @@ def embed_and_store(chunks: list[dict], db_path: str):
     )
 
 
-if __name__ == "__main__":
-    # This will become: load -> chunk -> embed_and_store
-    # once the functions above are implemented.
-
-    docs = load_documents("../data/notes")
+def run_ingestion(notes_dir: str, db_path: str) -> int:
+    """
+    Full ingestion pipeline: load -> chunk -> embed -> store.
+    Returns the number of chunks stored, so callers can report it.
+    """
+    docs = load_documents(notes_dir)
     
     all_chunks = []
     for doc in docs:
@@ -137,5 +139,10 @@ if __name__ == "__main__":
         for piece in pieces:
             all_chunks.append({"text": piece, "source": doc["source"]})
     
-    embed_and_store(all_chunks, "./chroma_store")
-    print(f"Stored {len(all_chunks)} chunks in the vector database.")
+    embed_and_store(all_chunks, db_path)
+
+    return len(all_chunks)
+
+if __name__ == "__main__":
+    count = run_ingestion(NOTES_DIR, CHROMA_DB_PATH)
+    print(f"Stored {count} chunks in the vector database.")
