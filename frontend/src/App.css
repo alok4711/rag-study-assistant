@@ -84,3 +84,43 @@ h1 {
   margin-right: 6px;
   font-family: monospace;
 }
+
+
+
+.upload-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 12px;
+  border: 1px dashed #d0d0d0;
+  border-radius: 8px;
+  background: #f7f8fa;
+}
+
+.upload-box input[type="file"] {
+  flex: 1;
+  font-size: 14px;
+  color: #444;
+}
+
+.upload-box button {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.upload-box button:hover {
+  background: #1d4ed8;
+}
+
+.upload-status {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666;
+}

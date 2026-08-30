@@ -1,0 +1,67 @@
+Linked List
+
+A Linked List is a linear data structure where elements are stored in nodes. Each node contains data and a reference to the next node.
+
+Unlike arrays, linked list elements are not stored in contiguous memory locations.
+
+Types of Linked Lists:
+
+1. Singly Linked List:
+Each node contains data and a reference to the next node. The last node points to null.
+
+2. Doubly Linked List:
+Each node contains data, a reference to the next node, and a reference to the previous node.
+
+3. Circular Linked List:
+The last node points back to the first node instead of pointing to null.
+
+Advantages of Linked Lists:
+
+- Dynamic size.
+- Easy insertion and deletion when the position or node is known.
+- Does not require contiguous memory allocation.
+
+Disadvantages of Linked Lists:
+
+- Random access is not possible.
+- Searching for an element takes O(n) time.
+- Each node requires extra memory for storing references.
+
+Time Complexity:
+
+Accessing an element: O(n)
+Searching: O(n)
+Insertion at the beginning: O(1)
+Deletion at the beginning: O(1)
+Insertion at the end: O(n) in a singly linked list without a tail pointer.
+Deletion at the end: O(n) in a singly linked list.
+
+Example:
+
+Consider the following singly linked list:
+
+10 -> 20 -> 30 -> 40 -> null
+
+Here, 10 is the first node and 40 is the last node. The last node points to null.
+
+In Java, a simple linked list node can be represented as:
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+The head variable stores a reference to the first node.
+
+Example questions:
+
+What is a linked list?
+What is the time complexity of searching in a linked list?
+What are the types of linked lists?
+What is the difference between an array and a linked list?
+What is the time complexity of inserting a node at the beginning?

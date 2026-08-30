@@ -7,6 +7,37 @@ function App() {
   const [question, setQuestion]=useState("");
   const [answer, setAnswer]=useState(null);
   const [loading, setLoading]=useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState("");
+
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      setUploadStatus("Please select a file to upload.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      const response = await fetch("http://127.0.0.1:8000/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if(!response.ok) {
+        throw new Error(data.detail || "File upload failed.");
+      }
+
+      setUploadStatus("File uploaded successfully.");
+    }
+    catch (error) {
+      setUploadStatus(`Error: ${error.message}`);
+    }
+  };
   
 
   const handleAsk = async () => {
@@ -37,11 +68,31 @@ function App() {
     }
   };
 
+
   return (
     <div className="app">
       <h1>RAG Study Assistant</h1>
       <p className="subtitle">Ask a question about your notes</p>
 
+      {/* File Upload */}
+      <div className="upload-box">
+        <input
+          type="file"
+          accept=".txt"
+          onChange={(e) => setSelectedFile(e.target.files[0])}
+        />
+
+        <button
+          type="button"
+          onClick={handleUpload}
+        >
+          Upload
+        </button>
+
+        {uploadStatus && <p>{uploadStatus}</p>}
+      </div>
+
+      {/* Ask Question */}
       <div className="ask-box">
         <input
           type="text"
