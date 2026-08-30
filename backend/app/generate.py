@@ -29,7 +29,8 @@ def build_prompt(question: str, chunks: list[dict]) -> str:
         context += f"[Source: {chunk['source']}]\n{chunk['text']}\n\n"
 
     # 2. Build the final prompt
-    prompt = f"""You are a study assistant. Answer the question using ONLY the context provided below.
+    prompt = f"""
+    You are a study assistant. Answer the question using ONLY the context provided below.
 
     If the answer is not present in the context, say:
     "I don't know based on the notes provided."
