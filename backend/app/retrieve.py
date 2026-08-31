@@ -7,7 +7,7 @@ We'll build this after ingest.py is working.
 """
 
 import chromadb
-from app.embeddings import model
+from app.embeddings import embed_texts
 
 def retrieve_relevant_chunks(question: str, db_path: str, top_k: int = 3) -> list[dict]:
     """
@@ -20,8 +20,7 @@ def retrieve_relevant_chunks(question: str, db_path: str, top_k: int = 3) -> lis
     comparable (they'd be measuring "distance" in different spaces).
     """
 
-
-    question_vector = model.encode([question]).tolist()  # note: wrapped in a list
+    question_vector = embed_texts([question])  # note: wrapped in a list
 
     # Create/connect to persistent ChromaDB
     client = chromadb.PersistentClient(path=db_path)

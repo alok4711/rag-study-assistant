@@ -1,8 +1,16 @@
 """
-Loads the embedding model ONCE when this module is first imported,
-so every other file that needs it reuses the same loaded model
-instead of reloading it repeatedly.
+Turns text into embedding vectors using Gemini's embedding API
+instead of running a model locally -- keeps memory usage low.
 """
-from sentence_transformers import SentenceTransformer
+from google import genai
+from app.config import GEMINI_API_KEY
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+client = genai.Client(api_key=GEMINI_API_KEY)
+
+def embed_texts(texts: list[str]) -> list[list[float]]:
+    """Takes a list of strings, returns a list of embedding vectors."""
+    result = client.models.embed_content(
+        model="gemini-embedding-001",
+        contents=texts
+    )
+    return [e.values for e in result.embeddings]

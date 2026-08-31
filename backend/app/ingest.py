@@ -13,7 +13,7 @@ in our next session, starting with load_documents().
 from pathlib import Path
 import chromadb
 from app.config import NOTES_DIR, CHROMA_DB_PATH
-from app.embeddings import model
+from app.embeddings import embed_texts
 
 
 def load_documents(notes_dir: str) -> list[dict]:
@@ -100,7 +100,7 @@ def embed_and_store(chunks: list[dict], db_path: str):
     texts = [chunk["text"] for chunk in chunks]
 
     # Encode all texts at once
-    vectors = model.encode(texts).tolist()
+    vectors = embed_texts(texts)
 
     # 4. Build IDs
     ids = [f"chunk_{i}" for i in range(len(chunks))]
