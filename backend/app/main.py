@@ -26,6 +26,12 @@ from app.config import ALLOWED_ORIGINS
 
 app = FastAPI(title="RAG Study Assistant")
 
+
+@app.on_event("startup")
+def startup_event():
+    run_ingestion(NOTES_DIR, CHROMA_DB_PATH)
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
