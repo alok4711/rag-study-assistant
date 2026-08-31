@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import AskPage from './pages/AskPage'
 import EvaluatePage from './pages/EvaluatePage'
 import './App.css'
@@ -7,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <nav className="navbar">
-        <Link to="/">Ask</Link>
-        <Link to="/evaluate">Evaluation Dashboard</Link>
+        <NavLink to="/">Ask</NavLink>
+        <NavLink to="/evaluate">Evaluation Dashboard</NavLink>
       </nav>
 
       <Routes>
