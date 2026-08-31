@@ -11,9 +11,9 @@ in our next session, starting with load_documents().
 """
 
 from pathlib import Path
-from sentence_transformers import SentenceTransformer
 import chromadb
 from app.config import NOTES_DIR, CHROMA_DB_PATH
+from app.embeddings import model
 
 
 def load_documents(notes_dir: str) -> list[dict]:
@@ -78,16 +78,13 @@ def embed_and_store(chunks: list[dict], db_path: str):
     along with its source metadata.
 
     Steps you'll implement:
-    1. Load the embedding model: SentenceTransformer("all-MiniLM-L6-v2")
-    2. Create/connect to a persistent Chroma client at db_path
-    3. Create or get a collection (think of it like a table)
-    4. For each chunk: encode it to a vector, then add it to the collection
+    1. Create/connect to a persistent Chroma client at db_path
+    2. Create or get a collection (think of it like a table)
+    3. For each chunk: encode it to a vector, then add it to the collection
        along with its text and source filename as metadata
     """
-    # 1. Load the embedding model
-    model = SentenceTransformer("all-MiniLM-L6-v2")
 
-    # 2. Create/connect to persistent ChromaDB
+    # 1. Create/connect to persistent ChromaDB
     client = chromadb.PersistentClient(path=db_path)
 
     # Start fresh each time ingestion runs, so old/stale data never lingers
@@ -96,16 +93,16 @@ def embed_and_store(chunks: list[dict], db_path: str):
     except Exception:
         pass  # collection didn't exist yet, nothing to delete
 
-    # 3. Create or get the collection
+    # 2. Create or get the collection
     collection = client.get_or_create_collection("notes")
 
-    # 4. Extract text from all chunks
+    # 3. Extract text from all chunks
     texts = [chunk["text"] for chunk in chunks]
 
     # Encode all texts at once
     vectors = model.encode(texts).tolist()
 
-    # 5. Build IDs
+    # 4. Build IDs
     ids = [f"chunk_{i}" for i in range(len(chunks))]
 
     # Documents = original text
@@ -117,7 +114,7 @@ def embed_and_store(chunks: list[dict], db_path: str):
         for chunk in chunks
     ]
 
-    # 6. Store everything in ChromaDB
+    # 5. Store everything in ChromaDB
     collection.add(
         ids=ids,
         embeddings=vectors,
