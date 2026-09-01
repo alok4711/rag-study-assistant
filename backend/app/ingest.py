@@ -123,6 +123,19 @@ def embed_and_store(chunks: list[dict], db_path: str):
     )
 
 
+def is_already_ingested(db_path: str) -> bool:
+    """
+    Checks if the vector database already has data, so we can skip
+    re-embedding everything on every server restart.
+    """
+    client = chromadb.PersistentClient(path=db_path)
+    try:
+        collection = client.get_collection("notes")
+        return collection.count() > 0
+    except Exception:
+        return False
+
+
 def run_ingestion(notes_dir: str, db_path: str) -> int:
     """
     Full ingestion pipeline: load -> chunk -> embed -> store.

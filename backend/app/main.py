@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from app.retrieve import retrieve_relevant_chunks
 from app.generate import generate_answer
 from app.config import NOTES_DIR, CHROMA_DB_PATH
-from app.ingest import run_ingestion
+from app.ingest import run_ingestion, is_already_ingested
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -29,7 +29,8 @@ app = FastAPI(title="RAG Study Assistant")
 
 @app.on_event("startup")
 def startup_event():
-    run_ingestion(NOTES_DIR, CHROMA_DB_PATH)
+    if not is_already_ingested(CHROMA_DB_PATH):
+        run_ingestion(NOTES_DIR, CHROMA_DB_PATH)
 
 
 app.add_middleware(

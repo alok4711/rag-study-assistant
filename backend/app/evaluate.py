@@ -95,7 +95,7 @@ def judge_answer(question: str, expected_answer: str, actual_answer: str) -> dic
     client = genai.Client(api_key=GEMINI_API_KEY)
 
     response = client.models.generate_content(
-        model="gemini-3.6-flash",
+        model="gemini-3.5-flash-lite",
         contents=prompt
     )
 
