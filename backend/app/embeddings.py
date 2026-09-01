@@ -11,7 +11,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
     """Takes a list of strings, returns a list of embedding vectors."""
-    max_retries = 4
+    max_retries = 6
     for attempt in range(max_retries):
         try:
             result = client.models.embed_content(
